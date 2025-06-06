@@ -180,6 +180,59 @@ function setActiveNavItem() {
     }
   });
 }
+
+// ===== FIX BUG TITLE KHI REFRESH =====
+function handleDrinkTitle() {
+  const h1Element = document.getElementById('drinkTitle');
+  if (!h1Element) return;
+
+  // Hàm cập nhật tiêu đề từ URL hash
+  const updateTitle = () => {
+      const hash = window.location.hash;
+      if (!hash || !hash.includes('drink-')) return;
+
+      // Tìm menu item tương ứng với hash
+      const menuItems = document.querySelectorAll('.header-menu a');
+      let matchedItem = null;
+      
+      menuItems.forEach(item => {
+          if (item.getAttribute('href').includes(hash)) {
+              matchedItem = item;
+          }
+      });
+
+      // Cập nhật tiêu đề nếu tìm thấy
+      if (matchedItem) {
+          h1Element.textContent = matchedItem.textContent.trim();
+      }
+  };
+
+  // Chạy ngay khi DOM ready
+  updateTitle();
+  
+  // Theo dõi thay đổi URL hash
+  window.addEventListener('hashchange', updateTitle);
+
+  // Xử lý scroll khi trang load với hash
+  if (window.location.hash) {
+      setTimeout(() => {
+          const target = document.querySelector(window.location.hash);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+  }
+}
+
+// Gọi hàm khi DOM ready
+document.addEventListener('DOMContentLoaded', handleDrinkTitle);
+
+document.querySelector('.header-menu a[href*="#drink-10"]').click();
+// Kiểm tra sau 1s
+setTimeout(() => {
+    console.log(document.getElementById('drinkTitle').textContent); 
+    // Phải là "Trà sữa"
+}, 1000);
+
+
 // --- Zoom Images Modal ---
 let galleryImages = [];
 let currentIndex = 0;
@@ -194,6 +247,8 @@ function initGalleryModal() {
     }
   });
 }
+
+
 
 function openModalWithIndex(idx) {
   currentIndex = idx;
