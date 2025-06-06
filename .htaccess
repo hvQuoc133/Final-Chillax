@@ -1,0 +1,30 @@
+# BẬT MOD_REWRITE
+RewriteEngine On
+
+# ----- QUAN TRỌNG: Cho phép truy cập thư mục .well-known (cần cho SSL) -----
+RewriteRule ^\.well-known/ - [L]
+
+# Redirect HTTP -> HTTPS (bảo mật)
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Redirect .html URLs to URLs without .html
+RewriteCond %{THE_REQUEST} \s([^.]+)\.html[\s?] [NC]
+RewriteRule ^ %1 [R=301,L]
+
+# Rewrite URLs without .html to .html
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^([^.]+)$ $1.html [L]
+
+# CHẶN LIỆT KÊ THƯ MỤC
+Options -Indexes
+
+# CHẶN TRUY CẬP FILE NHẠY CẢM
+<FilesMatch "(\.env|\.git|\.htaccess|composer\.json|composer\.lock|package\.json|package-lock\.json)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Chuyển hướng 301 trang chủ
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^$ /index [R=301,L]
