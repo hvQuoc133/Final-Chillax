@@ -93,6 +93,26 @@
     color: #FF0000;
 }
 
+.social-network .icon-whatapp {
+    color: #25D366;
+}
+
+.social-network .icon-viber {
+    color: #7360F2;
+}
+
+.social-network .icon-zalo {
+    width: 22px;
+    height: 20px;
+    object-fit: contain;
+    margin-bottom: 5px;
+}
+
+.social-network a:hover {
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
+
 /* Author content */
 .ft-author {
     text-align: center;

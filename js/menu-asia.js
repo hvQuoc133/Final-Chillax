@@ -1,16 +1,16 @@
 
 // Create data h1
 const drinkCategories = {
-    '#drink-1': { i18nKey: 'drinkMenu.coffee', defaultTexts: { vi: 'CÀ PHÊ', en: 'COFFEE' } },
-    '#drink-2': { i18nKey: 'drinkMenu.hotTea', defaultTexts: { vi: 'TRÀ NÓNG', en: 'HOT TEA' } },
-    '#drink-3': { i18nKey: 'drinkMenu.icedTea', defaultTexts: { vi: 'TRÀ GIẢI NHIỆT', en: 'ICED TEA' } },
-    '#drink-4': { i18nKey: 'drinkMenu.yogurtIceCream', defaultTexts: { vi: 'SỮA CHUA & KEM', en: 'YOGURT & ICE CREAM' } },
-    '#drink-5': { i18nKey: 'drinkMenu.lassi', defaultTexts: { vi: 'LASSI', en: 'LASSI' } },
-    '#drink-6': { i18nKey: 'drinkMenu.nonCoffee', defaultTexts: { vi: 'NON COFFEE', en: 'NON COFFEE' } },
-    '#drink-7': { i18nKey: 'drinkMenu.fruitJuice', defaultTexts: { vi: 'NƯỚC ÉP TRÁI CÂY', en: 'FRUIT JUICE' } },
-    '#drink-8': { i18nKey: 'drinkMenu.detox', defaultTexts: { vi: 'DETOX', en: 'DETOX' } },
-    '#drink-9': { i18nKey: 'drinkMenu.mocktail', defaultTexts: { vi: 'MOCKTAIL', en: 'MOCKTAIL' } },
-    '#drink-10': { i18nKey: 'drinkMenu.cocktail', defaultTexts: { vi: 'COCKTAIL', en: 'COCKTAIL' } }
+    '#appetizer': { i18nKey: 'foodMenu.asia.appetizer', defaultTexts: { vi: 'KHAI VỊ', en: 'APPETIZER' } },
+    '#eggnoodles': { i18nKey: 'foodMenu.asia.eggnoodles', defaultTexts: { vi: 'MÌ TRỨNG', en: 'EGG NOODLES' } },
+    '#ricedishes': { i18nKey: 'foodMenu.asia.ricedishes', defaultTexts: { vi: 'CƠM', en: 'RICE DISHES' } },
+    '#soupdishes': { i18nKey: 'foodMenu.asia.soupdishes', defaultTexts: { vi: 'CANH', en: 'SOUP' } },
+    '#salad': { i18nKey: 'foodMenu.asia.salad', defaultTexts: { vi: 'GỎI', en: 'SALAD' } },
+    '#brothsoup': { i18nKey: 'foodMenu.asia.brothsoup', defaultTexts: { vi: 'SÚP', en: 'BROTH SOUP' } },
+    '#shrimp': { i18nKey: 'foodMenu.asia.shrimp', defaultTexts: { vi: 'TÔM', en: 'SHRIMP' } },
+    '#squid': { i18nKey: 'foodMenu.asia.squid', defaultTexts: { vi: 'MỰC', en: 'SQUID' } },
+    '#fishdishes': { i18nKey: 'foodMenu.asia.fishdishes', defaultTexts: { vi: 'CÁ', en: 'FISH' } },
+    '#dessert': { i18nKey: 'foodMenu.asia.dessert', defaultTexts: { vi: 'TRÁNG MIỆNG', en: 'DESSERT' } }
 };
 
 function getCurrentLanguage() {
@@ -22,9 +22,9 @@ function getCurrentLanguage() {
     return document.documentElement.lang || 'vi';
 }
 
-// Edit function updateDrinkTitle
-function updateDrinkTitle() {
-    const h1 = document.getElementById('drinkTitle');
+// Edit function updateAsiaTitle
+function updateAsiaTitle() {
+    const h1 = document.getElementById('asiaTitle');
     if (!h1) return;
 
     // often update currentLang
@@ -41,9 +41,9 @@ function updateDrinkTitle() {
             : cat.defaultTexts[currentLang] || cat.defaultTexts.vi;
         h1.setAttribute('data-i18n', cat.i18nKey);
     } else {
-        const defaultTitles = { vi: 'THỰC ĐƠN NƯỚC CHILLAX', en: 'CHILLAX DRINK MENU' };
-        const t = window.i18next?.t('drinkMenu.title');
-        h1.textContent = (t && t !== 'drinkMenu.title')
+        const defaultTitles = { vi: 'THỰC ĐƠN CHÂU Á', en: 'CHILLAX ASIAN MENU' };
+        const t = window.i18next?.t('asiaMenu.title');
+        h1.textContent = (t && t !== 'asiaMenu.title')
             ? t
             : defaultTitles[currentLang] || defaultTitles.vi;
         h1.removeAttribute('data-i18n');
@@ -57,14 +57,14 @@ window.changeLang = function (lang) {
     localStorage.setItem('language', lang);
 
     if (window.i18next) {
-        i18next.changeLanguage(lang).then(() => updateDrinkTitle());
+        i18next.changeLanguage(lang).then(() => updateAsiaTitle());
     } else {
-        updateDrinkTitle();
+        updateAsiaTitle();
     }
 };
 
 // Keep the same event listeners
-window.addEventListener('hashchange', updateDrinkTitle);
+window.addEventListener('hashchange', updateAsiaTitle);
 window.addEventListener('DOMContentLoaded', () => {
     // Initialition currentLang 
     currentLang = getCurrentLanguage();
@@ -79,16 +79,16 @@ window.addEventListener('DOMContentLoaded', () => {
         i18next.on('initialized', () => {
             currentLang = i18next.language;
             document.documentElement.lang = currentLang;
-            updateDrinkTitle();
+            updateAsiaTitle();
         });
 
         i18next.on('languageChanged', (lng) => {
             currentLang = lng;
             document.documentElement.lang = currentLang;
             localStorage.setItem('language', lng);
-            updateDrinkTitle();
+            updateAsiaTitle();
         });
     }
 
-    updateDrinkTitle();
+    updateAsiaTitle();
 });

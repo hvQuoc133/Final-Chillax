@@ -1,16 +1,16 @@
 
 // Create data h1
 const drinkCategories = {
-    '#drink-1': { i18nKey: 'drinkMenu.coffee', defaultTexts: { vi: 'CÀ PHÊ', en: 'COFFEE' } },
-    '#drink-2': { i18nKey: 'drinkMenu.hotTea', defaultTexts: { vi: 'TRÀ NÓNG', en: 'HOT TEA' } },
-    '#drink-3': { i18nKey: 'drinkMenu.icedTea', defaultTexts: { vi: 'TRÀ GIẢI NHIỆT', en: 'ICED TEA' } },
-    '#drink-4': { i18nKey: 'drinkMenu.yogurtIceCream', defaultTexts: { vi: 'SỮA CHUA & KEM', en: 'YOGURT & ICE CREAM' } },
-    '#drink-5': { i18nKey: 'drinkMenu.lassi', defaultTexts: { vi: 'LASSI', en: 'LASSI' } },
-    '#drink-6': { i18nKey: 'drinkMenu.nonCoffee', defaultTexts: { vi: 'NON COFFEE', en: 'NON COFFEE' } },
-    '#drink-7': { i18nKey: 'drinkMenu.fruitJuice', defaultTexts: { vi: 'NƯỚC ÉP TRÁI CÂY', en: 'FRUIT JUICE' } },
-    '#drink-8': { i18nKey: 'drinkMenu.detox', defaultTexts: { vi: 'DETOX', en: 'DETOX' } },
-    '#drink-9': { i18nKey: 'drinkMenu.mocktail', defaultTexts: { vi: 'MOCKTAIL', en: 'MOCKTAIL' } },
-    '#drink-10': { i18nKey: 'drinkMenu.cocktail', defaultTexts: { vi: 'COCKTAIL', en: 'COCKTAIL' } }
+    '#appetizer': { i18nKey: 'foodMenu.europe.appetizer', defaultTexts: { vi: 'MÓN ĂN NHẸ', en: 'APPETIZER' } },
+    '#pizza': { i18nKey: 'foodMenu.europe.pizza', defaultTexts: { vi: 'PIZZA', en: 'PIZZA' } },
+    '#salad': { i18nKey: 'foodMenu.europe.salad', defaultTexts: { vi: 'SALAD', en: 'SALAD' } },
+    '#pasta': { i18nKey: 'foodMenu.europe.pasta', defaultTexts: { vi: 'MÌ Ý', en: 'PASTA' } },
+    '#soup': { i18nKey: 'foodMenu.europe.soup', defaultTexts: { vi: 'SÚP', en: 'SOUP' } },
+    '#pig': { i18nKey: 'foodMenu.europe.pig', defaultTexts: { vi: 'HEO', en: 'PIG' } },
+    '#chicken': { i18nKey: 'foodMenu.europe.chicken', defaultTexts: { vi: 'GÀ', en: 'CHICKEN' } },
+    '#fish': { i18nKey: 'foodMenu.europe.fish', defaultTexts: { vi: 'CÁ', en: 'FISH' } },
+    '#beef': { i18nKey: 'foodMenu.europe.beef', defaultTexts: { vi: 'BÒ', en: 'BEEF' } },
+    '#duck': { i18nKey: 'foodMenu.europe.duck', defaultTexts: { vi: 'VỊT', en: 'DUCK' } }
 };
 
 function getCurrentLanguage() {
@@ -22,9 +22,9 @@ function getCurrentLanguage() {
     return document.documentElement.lang || 'vi';
 }
 
-// Edit function updateDrinkTitle
-function updateDrinkTitle() {
-    const h1 = document.getElementById('drinkTitle');
+// Edit function updateEurope
+function updateEurope() {
+    const h1 = document.getElementById('europeTitle');
     if (!h1) return;
 
     // often update currentLang
@@ -41,9 +41,9 @@ function updateDrinkTitle() {
             : cat.defaultTexts[currentLang] || cat.defaultTexts.vi;
         h1.setAttribute('data-i18n', cat.i18nKey);
     } else {
-        const defaultTitles = { vi: 'THỰC ĐƠN NƯỚC CHILLAX', en: 'CHILLAX DRINK MENU' };
-        const t = window.i18next?.t('drinkMenu.title');
-        h1.textContent = (t && t !== 'drinkMenu.title')
+        const defaultTitles = { vi: 'THỰC ĐƠN CHÂU Á', en: 'CHILLAX ASIAN MENU' };
+        const t = window.i18next?.t('asiaMenu.title');
+        h1.textContent = (t && t !== 'asiaMenu.title')
             ? t
             : defaultTitles[currentLang] || defaultTitles.vi;
         h1.removeAttribute('data-i18n');
@@ -57,14 +57,14 @@ window.changeLang = function (lang) {
     localStorage.setItem('language', lang);
 
     if (window.i18next) {
-        i18next.changeLanguage(lang).then(() => updateDrinkTitle());
+        i18next.changeLanguage(lang).then(() => updateEurope());
     } else {
-        updateDrinkTitle();
+        updateEurope();
     }
 };
 
 // Keep the same event listeners
-window.addEventListener('hashchange', updateDrinkTitle);
+window.addEventListener('hashchange', updateEurope);
 window.addEventListener('DOMContentLoaded', () => {
     // Initialition currentLang 
     currentLang = getCurrentLanguage();
@@ -79,16 +79,16 @@ window.addEventListener('DOMContentLoaded', () => {
         i18next.on('initialized', () => {
             currentLang = i18next.language;
             document.documentElement.lang = currentLang;
-            updateDrinkTitle();
+            updateEurope();
         });
 
         i18next.on('languageChanged', (lng) => {
             currentLang = lng;
             document.documentElement.lang = currentLang;
             localStorage.setItem('language', lng);
-            updateDrinkTitle();
+            updateEurope();
         });
     }
 
-    updateDrinkTitle();
+    updateEurope();
 });

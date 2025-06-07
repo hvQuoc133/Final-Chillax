@@ -28,6 +28,7 @@
   "foodMenu.europe.fish": "CÁ",
   "foodMenu.europe.beef": "BÒ",
   "foodMenu.europe.duck": "VỊT",
+
   "foodMenu.asia": "CHÂU Á",
   "foodMenu.asia.appetizer": "KHAI VỊ",
   "foodMenu.asia.eggnoodles": "MÌ TRỨNG",
@@ -94,6 +95,7 @@
   "select-car-5": "Xe khách 29 chỗ",
   "select-car-6": "Xe khách 35 chỗ",
   "select-car-7": "Xe khách 45 chỗ",
+  "Other-vehicles": "Xe khác",
 
   "ABOUT PAGE": "--------------------------------------------------------------------------------------------------------------------------------------------------------------",
   "title-pl": "KHÔNG GIAN VÀ DIỆN TÍCH NHÀ HÀNG CHILLAX",
@@ -117,7 +119,7 @@
   "drinkMenu.title": "THỰC ĐƠN NƯỚC CHILLAX",
   "drinkMenu.coffeeSalt": "CÀ PHÊ MUỐI",
   "drinkMenu.coffeeCoconut": "CÀ PHÊ DỪA",
-  "drinkMenu.coffeeHell": "CÀ PHÊ HOẢ NGỤC",
+  "drinkMenu.cappucino": "CAPPUCCINO",
   "drinkMenu.bacXiu": "BẠC XỈU",
   "drinkMenu.gingerHerbalTea": "TRÀ GỪNG THẢO MỘC",
   "drinkMenu.lemonLicoriceTea": "TRÀ CHANH CAM THẢO",
@@ -188,7 +190,7 @@
   "europeMenu.saladTaoHatOcCho": "SALAD TÁO VỚI HẠT ÓC CHÓ",
   "europeMenu.miYCaHoi": "MÌ Ý CÁ HỒI",
   "europeMenu.miYSotKem": "MÌ Ý SỐT KEM",
-  "europeMenu.supCaChua": "SÚP CÀ CHUA",
+  "europeMenu.supBiDo": "SÚP BÍ ĐỎ",
   "europeMenu.supKhoaiTayNghien": "SÚP KHOAI TÂY NGHIỀN",
   "europeMenu.thanHeoDutLo": "THĂN HEO ĐÚT LÒ",
   "europeMenu.ucGaCuonPhoMai": "ỨC GÀ CUỘN PHÔ MAI",
