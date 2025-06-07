@@ -14,64 +14,70 @@ const drinkCategories = {
     '#drink-10':{ i18nKey: 'drinkMenu.cocktail',      defaultTexts: { vi: 'COCKTAIL',         en: 'COCKTAIL' } }
   };
   
-  // 2. Lấy ngôn ngữ hiện tại (ưu tiên i18next.language)
-  function getCurrentLanguage() {
-    return window.i18next?.language || document.documentElement.lang || 'vi';
-  }
+  // 2. Biến lưu trạng thái ngôn ngữ hiện tại
+  let currentLang = document.documentElement.lang || 'vi';
   
-  // 3. Cập nhật tiêu đề
+  // 3. Hàm cập nhật tiêu đề dựa trên hash và currentLang
   function updateDrinkTitle() {
     const h1 = document.getElementById('drinkTitle');
     if (!h1) return;
-  
     const hash = window.location.hash || '#drink-1';
     const cat = drinkCategories[hash];
-    const lang = getCurrentLanguage();
   
     if (cat) {
+      // Lấy bản dịch i18n nếu có
       const tr = window.i18next?.t(cat.i18nKey);
       h1.textContent = (tr && tr !== cat.i18nKey)
         ? tr
-        : cat.defaultTexts[lang] || cat.defaultTexts.vi;
+        : cat.defaultTexts[currentLang] || cat.defaultTexts.vi;
       h1.setAttribute('data-i18n', cat.i18nKey);
     } else {
-      const def = { vi: 'THỰC ĐƠN NƯỚC CHILLAX', en: 'CHILLAX DRINK MENU' };
+      const defaultTitles = { vi: 'THỰC ĐƠN NƯỚC CHILLAX', en: 'CHILLAX DRINK MENU' };
       const t = window.i18next?.t('drinkMenu.title');
       h1.textContent = (t && t !== 'drinkMenu.title')
         ? t
-        : def[lang] || def.vi;
+        : defaultTitles[currentLang] || defaultTitles.vi;
       h1.removeAttribute('data-i18n');
     }
   }
   
-  // 4. Hàm đổi ngôn ngữ (onclick)
+  // 4. Đổi ngôn ngữ gọi từ onclick
   window.changeLang = function(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
     if (window.i18next) {
-      i18next.changeLanguage(lang).then(() => {
-        document.documentElement.lang = lang;
-        updateDrinkTitle();
-      });
+      i18next.changeLanguage(lang).then(() => updateDrinkTitle());
     } else {
-      document.documentElement.lang = lang;
       updateDrinkTitle();
     }
   };
   
-  // 5. Event listeners
+  // 5. Lắng nghe hashchange
   window.addEventListener('hashchange', updateDrinkTitle);
+  
+  // 6. Khởi tạo khi DOMContentLoaded
   window.addEventListener('DOMContentLoaded', () => {
-    // Chờ i18next và update một lần
+    // Nếu sử dụng i18next, gán currentLang từ i18next và lắng nghe sự kiện
     if (window.i18next) {
+      // Nếu đã init trước
+      if (i18next.isInitialized) {
+        currentLang = i18next.language;
+        document.documentElement.lang = currentLang;
+      }
+      // Khi khởi tạo xong
       i18next.on('initialized', () => {
-        document.documentElement.lang = i18next.language;
+        currentLang = i18next.language;
+        document.documentElement.lang = currentLang;
         updateDrinkTitle();
       });
-      i18next.on('languageChanged', () => {
-        document.documentElement.lang = i18next.language;
+      // Khi user thay đổi
+      i18next.on('languageChanged', (lng) => {
+        currentLang = lng;
+        document.documentElement.lang = currentLang;
         updateDrinkTitle();
       });
-    } else {
-      updateDrinkTitle();
     }
+    // Render lần đầu
+    updateDrinkTitle();
   });
   
