@@ -147,5 +147,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Khởi chạy lần đầu
   updateDrinkTitle();
+  // Chạy lần đầu khi trang load
+window.addEventListener('DOMContentLoaded', renderDrinkMenu);
+
+// Chạy mỗi khi hash (fragment) thay đổi
+window.addEventListener('hashchange', renderDrinkMenu);
 
 });
