@@ -41,7 +41,7 @@
     </script>
 </head>
 
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Map giữa hash URL và key i18n tương ứng
         const categoryMap = {
@@ -164,7 +164,7 @@
         // Khởi chạy
         initEvents();
     });
-</script>
+</script> -->
 <body>
     <div id="header"></div>
 
@@ -594,7 +594,8 @@
     <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/js/lightbox.min.js"></script>
     <script src="js/main.js" defer></script>
     <script src="js/include.js"></script>
-    <script>
+    <script src="js/menu-drink.js"></script>
+    <!-- <script>
         document.addEventListener('DOMContentLoaded', function () {
             const menuToggle = document.querySelector('.menu-toggle');
             const navMenu = document.querySelector('.navMenuCustom');
@@ -604,7 +605,81 @@
                 });
             }
         });
-    </script>
+    </script> -->
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Map giữa hash và translation keys
+          const hashToTitleMap = {
+            '#drink-1': 'drinkMenu.coffee',
+            '#drink-2': 'drinkMenu.hotTea',
+            '#drink-3': 'drinkMenu.icedTea',
+            '#drink-4': 'drinkMenu.yogurtIceCream',
+            '#drink-5': 'drinkMenu.lassi',
+            '#drink-6': 'drinkMenu.nonCoffee',
+            '#drink-7': 'drinkMenu.fruitJuice',
+            '#drink-8': 'drinkMenu.detox',
+            '#drink-9': 'drinkMenu.mocktail',
+            '#drink-10': 'drinkMenu.cocktail'
+          };
+        
+          // Fallback texts khi i18n chưa load
+          const defaultTexts = {
+            'drinkMenu.coffee': 'CÀ PHÊ',
+            'drinkMenu.hotTea': 'TRÀ NÓNG',
+            'drinkMenu.icedTea': 'TRÀ GIẢI NHIỆT',
+            'drinkMenu.yogurtIceCream': 'SỮA CHUA & KEM',
+            'drinkMenu.lassi': 'LASSI',
+            'drinkMenu.nonCoffee': 'NON COFFEE',
+            'drinkMenu.fruitJuice': 'NƯỚC ÉP TRÁI CÂY',
+            'drinkMenu.detox': 'DETOX',
+            'drinkMenu.mocktail': 'MOCKTAIL',
+            'drinkMenu.cocktail': 'COCKTAIL',
+            'drinkMenu.title': 'THỰC ĐƠN NƯỚC CHILLAX'
+          };
+        
+          function updateDrinkTitle() {
+            const h1 = document.getElementById('drinkTitle');
+            if (!h1) return;
+        
+            const hash = window.location.hash;
+            const i18nKey = hashToTitleMap[hash] || 'drinkMenu.title';
+            
+            // Ưu tiên: i18n > fallback text > text mặc định
+            h1.textContent = window.i18next?.t(i18nKey) || defaultTexts[i18nKey] || h1.textContent;
+            h1.setAttribute('data-i18n', i18nKey);
+            
+            // Scroll đến section tương ứng
+            if (hash) {
+              setTimeout(() => {
+                const target = document.querySelector(hash);
+                target?.scrollIntoView({ behavior: 'smooth' });
+              }, 100);
+            }
+          }
+        
+          // Xử lý khi trang load (kể cả từ trang khác)
+          function handleInitialLoad() {
+            const hash = window.location.hash;
+            if (hash && hashToTitleMap[hash]) {
+              updateDrinkTitle();
+            }
+          }
+        
+          // Khởi tạo sự kiện
+          handleInitialLoad();
+          window.addEventListener('hashchange', updateDrinkTitle);
+          
+          if (window.i18next) {
+            i18next.on('initialized', updateDrinkTitle);
+            i18next.on('languageChanged', updateDrinkTitle);
+          }
+        
+          // Click menu item (đảm bảo hash thay đổi trước khi update)
+          document.querySelectorAll('.dropdown-submenu a').forEach(item => {
+            item.addEventListener('click', () => setTimeout(updateDrinkTitle, 50));
+          });
+        });
+        </script> -->
     <!-- AOS Animate On Scroll -->
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script>
