@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
       i18nKey: 'drinkMenu.yogurtIceCream',
       defaultTexts: {
         vi: 'SỮA CHUA & KEM',
-        en: 'COFFEE'
+        en: 'YOGURT & ICE CREAM'
       }
     },
     '#drink-5': { 
@@ -82,75 +82,82 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   // Hàm lấy ngôn ngữ hiện tại (ưu tiên từ i18next, sau đó từ HTML tag)
+  // 3. Hàm lấy ngôn ngữ hiện tại
   function getCurrentLanguage() {
-    return window.i18next?.language || document.documentElement.lang || 'vi';
+    // Ưu tiên từ i18next, sau đó từ localStorage, cuối cùng mới là HTML tag
+    return window.i18next?.language || localStorage.getItem('language') || document.documentElement.lang || 'vi';
   }
 
-  // Hàm cập nhật tiêu đề
+  // 4. Hàm cập nhật tiêu đề đồ uống
   function updateDrinkTitle() {
     const h1 = document.getElementById('drinkTitle');
     if (!h1) return;
 
-    const hash = window.location.hash;
+    const hash = window.location.hash || '#drink-1'; // Mặc định tab đầu tiên
     const category = drinkCategories[hash];
     const currentLang = getCurrentLanguage();
     
     if (category) {
-      // Luôn ưu tiên bản dịch từ i18n trước
-      const translatedText = window.i18next?.t(category.i18nKey);
-      
-      // Nếu i18n chưa sẵn sàng hoặc không có bản dịch
-      if (!translatedText || translatedText === category.i18nKey) {
-        h1.textContent = category.defaultTexts[currentLang] || category.defaultTexts.vi;
-      } else {
-        h1.textContent = translatedText;
+      // Ưu tiên bản dịch từ i18n
+      if (window.i18next) {
+        const translatedText = i18next.t(category.i18nKey);
+        if (translatedText && translatedText !== category.i18nKey) {
+          h1.textContent = translatedText;
+          return;
+        }
       }
-      
-      h1.setAttribute('data-i18n', category.i18nKey);
+      // Fallback về default text nếu không có i18n
+      h1.textContent = category.defaultTexts[currentLang] || category.defaultTexts.vi;
     } else {
-      // Xử lý tiêu đề mặc định
+      // Tiêu đề mặc định khi không có hash phù hợp
       const defaultTitle = {
         vi: 'THỰC ĐƠN NƯỚC CHILLAX',
         en: 'CHILLAX DRINK MENU'
       };
-      h1.textContent = window.i18next?.t('drinkMenu.title') || defaultTitle[currentLang] || defaultTitle.vi;
+      h1.textContent = defaultTitle[currentLang] || defaultTitle.vi;
     }
   }
 
-  // Xử lý khi chuyển ngôn ngữ
+  // 5. Hàm xử lý khi thay đổi ngôn ngữ
   function handleLanguageChange() {
-    // Cập nhật lang attribute cho HTML
-    document.documentElement.lang = window.i18next.language;
+    // Cập nhật lang attribute và localStorage
+    const lang = getCurrentLanguage();
+    document.documentElement.lang = lang;
+    localStorage.setItem('language', lang);
     updateDrinkTitle();
   }
 
-  // Khởi tạo sự kiện
+  // 6. Thiết lập sự kiện
   if (window.i18next) {
     i18next.on('languageChanged', handleLanguageChange);
-    i18next.on('initialized', updateDrinkTitle);
+    i18next.on('initialized', handleLanguageChange);
   }
   
+  // Theo dõi thay đổi hash và click menu
   window.addEventListener('hashchange', updateDrinkTitle);
   
-  // Xử lý click menu - thêm kiểm tra ngôn ngữ
+  // Xử lý click menu item
   document.querySelectorAll('.dropdown-submenu a').forEach(item => {
-    item.addEventListener('click', function() {
-      // Đảm bảo giữ nguyên ngôn ngữ hiện tại
-      const currentLang = getCurrentLanguage();
-      if (window.i18next) {
-        i18next.changeLanguage(currentLang).then(updateDrinkTitle);
-      } else {
-        setTimeout(updateDrinkTitle, 50);
-      }
+    item.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = this.getAttribute('href');
+      window.location.hash = target;
+      updateDrinkTitle();
     });
   });
 
-  // Khởi chạy lần đầu
+  // 7. Khởi tạo ban đầu
   updateDrinkTitle();
-  // Chạy lần đầu khi trang load
-window.addEventListener('DOMContentLoaded', renderDrinkMenu);
+  
+  // 8. Hàm render menu đồ uống
+  function renderDrinkMenu() {
+    // Thêm logic render menu của bạn ở đây nếu cần
+    updateDrinkTitle(); // Đảm bảo cập nhật tiêu đề
+  }
 
-// Chạy mỗi khi hash (fragment) thay đổi
-window.addEventListener('hashchange', renderDrinkMenu);
+  // Chạy lần đầu khi trang load
+  renderDrinkMenu();
 
 });
+
+
