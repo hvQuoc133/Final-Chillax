@@ -181,57 +181,47 @@ function setActiveNavItem() {
   });
 }
 
-// ===== FIX BUG TITLE KHI REFRESH =====
-function handleDrinkTitle() {
-  const h1Element = document.getElementById('drinkTitle');
-  if (!h1Element) return;
+// ===== FIX TITLE BUG - FINAL SOLUTION =====
+function handleTitlePersist() {
+  // Chỉ chạy trên trang drinkMenu
+  if (!window.location.pathname.includes('drinkMenu')) return;
+  
+  const titleElement = document.getElementById('drinkTitle');
+  if (!titleElement) return;
 
-  // Hàm cập nhật tiêu đề từ URL hash
+  // Hàm cập nhật tiêu đề
   const updateTitle = () => {
       const hash = window.location.hash;
-      if (!hash || !hash.includes('drink-')) return;
+      if (!hash || !hash.startsWith('#drink-')) return;
 
-      // Tìm menu item tương ứng với hash
-      const menuItems = document.querySelectorAll('.header-menu a');
-      let matchedItem = null;
-      
-      menuItems.forEach(item => {
-          if (item.getAttribute('href').includes(hash)) {
-              matchedItem = item;
-          }
-      });
+      // Tìm menu item tương ứng
+      const menuItem = Array.from(document.querySelectorAll('.header-menu a')).find(item => 
+          item.getAttribute('href').endsWith(hash)
+      );
 
-      // Cập nhật tiêu đề nếu tìm thấy
-      if (matchedItem) {
-          h1Element.textContent = matchedItem.textContent.trim();
+      if (menuItem) {
+          titleElement.textContent = menuItem.textContent.trim();
       }
   };
 
-  // Chạy ngay khi DOM ready
-  updateTitle();
+  // Chạy lần đầu với delay để đảm bảo DOM sẵn sàng
+  setTimeout(updateTitle, 300);
   
-  // Theo dõi thay đổi URL hash
-  window.addEventListener('hashchange', updateTitle);
+  // Theo dõi sự kiện hashchange (khi click menu hoặc back/forward)
+  window.addEventListener('hashchange', () => {
+      setTimeout(updateTitle, 100);
+  });
 
-  // Xử lý scroll khi trang load với hash
-  if (window.location.hash) {
-      setTimeout(() => {
-          const target = document.querySelector(window.location.hash);
-          if (target) target.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-  }
+  // Bắt sự kiện click trực tiếp (phòng trường hợp hashchange không bắt)
+  document.querySelectorAll('.header-menu a').forEach(item => {
+      item.addEventListener('click', () => {
+          setTimeout(updateTitle, 200);
+      });
+  });
 }
 
-// Gọi hàm khi DOM ready
-document.addEventListener('DOMContentLoaded', handleDrinkTitle);
-
-document.querySelector('.header-menu a[href*="#drink-10"]').click();
-// Kiểm tra sau 1s
-setTimeout(() => {
-    console.log(document.getElementById('drinkTitle').textContent); 
-    // Phải là "Trà sữa"
-}, 1000);
-
+// Gọi hàm khi tất cả tài nguyên load xong
+window.addEventListener('DOMContentLoaded', handleTitlePersist);
 
 // --- Zoom Images Modal ---
 let galleryImages = [];
@@ -247,8 +237,6 @@ function initGalleryModal() {
     }
   });
 }
-
-
 
 function openModalWithIndex(idx) {
   currentIndex = idx;
