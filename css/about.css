@@ -338,7 +338,46 @@ body {
 }
 
 /* ==== Responsive Styles for Main Section ==== */
-/* For devices with a width of 768px or less (tablets and below) */
+@media (max-width: 1600px) {
+
+    .space-content,
+    .scene-content {
+        padding: 20px;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .space-content .imgspace-content,
+    .scene-content .imgscene-content {
+        grid-template-columns: repeat(2, 300px);
+        grid-template-rows: repeat(2, 200px);
+    }
+
+    .imgspace-content img,
+    .imgscene-content img {
+        width: 300px;
+        height: 200px;
+    }
+}
+
+
+@media (max-width: 1060px) {
+
+    .space-content,
+    .scene-content {
+        display: block;
+    }
+
+}
+
+@media (max-width: 1060px) {
+    .textscene-content {
+        padding-bottom: 40px;
+    }
+
+}
+
 @media (max-width: 768px) {
 
     .space-content,
@@ -388,7 +427,6 @@ body {
     }
 }
 
-/* For devices with a width of 480px or less (mobile devices) */
 @media (max-width: 480px) {
 
     .space-content,
@@ -446,26 +484,3 @@ body {
         font-size: 14px;
     }
 }
-
-/* For larger desktop screens (>=1200px) */
-@media (min-width: 1200px) {
-
-    .space-content,
-    .scene-content {
-        padding: 50px 20%;
-    }
-
-    .space-content .imgspace-content,
-    .scene-content .imgscene-content {
-        grid-template-columns: repeat(2, 300px);
-        grid-template-rows: repeat(2, 200px);
-    }
-
-    .imgspace-content img,
-    .imgscene-content img {
-        width: 300px;
-        height: 200px;
-    }
-}
-
-/* Footer */

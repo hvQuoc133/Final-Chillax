@@ -333,7 +333,8 @@ body {
     font-weight: bold;
 }
 
-.settable-text h1, .settable-text h2 {
+.settable-text h1,
+.settable-text h2 {
     color: var(--primary-color);
 }
 
@@ -813,5 +814,3 @@ html {
         font-size: 1rem;
     }
 }
-
-/* Footer */

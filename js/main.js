@@ -185,38 +185,38 @@ function setActiveNavItem() {
 function handleTitlePersist() {
   // Chỉ chạy trên trang drinkMenu
   if (!window.location.pathname.includes('drinkMenu')) return;
-  
+
   const titleElement = document.getElementById('drinkTitle');
   if (!titleElement) return;
 
   // Hàm cập nhật tiêu đề
   const updateTitle = () => {
-      const hash = window.location.hash;
-      if (!hash || !hash.startsWith('#drink-')) return;
+    const hash = window.location.hash;
+    if (!hash || !hash.startsWith('#drink-')) return;
 
-      // Tìm menu item tương ứng
-      const menuItem = Array.from(document.querySelectorAll('.header-menu a')).find(item => 
-          item.getAttribute('href').endsWith(hash)
-      );
+    // Tìm menu item tương ứng
+    const menuItem = Array.from(document.querySelectorAll('.header-menu a')).find(item =>
+      item.getAttribute('href').endsWith(hash)
+    );
 
-      if (menuItem) {
-          titleElement.textContent = menuItem.textContent.trim();
-      }
+    if (menuItem) {
+      titleElement.textContent = menuItem.textContent.trim();
+    }
   };
 
   // Chạy lần đầu với delay để đảm bảo DOM sẵn sàng
   setTimeout(updateTitle, 300);
-  
+
   // Theo dõi sự kiện hashchange (khi click menu hoặc back/forward)
   window.addEventListener('hashchange', () => {
-      setTimeout(updateTitle, 100);
+    setTimeout(updateTitle, 100);
   });
 
   // Bắt sự kiện click trực tiếp (phòng trường hợp hashchange không bắt)
   document.querySelectorAll('.header-menu a').forEach(item => {
-      item.addEventListener('click', () => {
-          setTimeout(updateTitle, 200);
-      });
+    item.addEventListener('click', () => {
+      setTimeout(updateTitle, 200);
+    });
   });
 }
 
@@ -291,12 +291,12 @@ document.addEventListener('DOMContentLoaded', () => {
       container.innerHTML = html;
 
       if (typeof initHeaderJS === 'function') initHeaderJS();
-if (typeof setActiveNavItem === 'function') setActiveNavItem();
-if (typeof initEvents === 'function') initEvents();
+      if (typeof setActiveNavItem === 'function') setActiveNavItem();
+      if (typeof initEvents === 'function') initEvents();
 
-// GỌI LẠI loadLanguage với ngôn ngữ đang lưu
-const currentLang = localStorage.getItem('language') || 'vi';
-if (typeof loadLanguage === 'function') loadLanguage(currentLang);
+      // GỌI LẠI loadLanguage với ngôn ngữ đang lưu
+      const currentLang = localStorage.getItem('language') || 'vi';
+      if (typeof loadLanguage === 'function') loadLanguage(currentLang);
     })
     .catch(err => console.error("Lỗi khi tải header:", err));
 });
