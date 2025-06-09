@@ -187,7 +187,7 @@
 
     .navbar-nav {
         display: flex;
-        gap: 20px;
+        gap: 10px;
     }
 
     .navbar-expand-md .navbar-nav .nav-link {
@@ -215,7 +215,6 @@
     .navbar-toggler {
         flex-shrink: 0;
         z-index: 1051;
-        /* margin-bottom: 50px; */
     }
 
     .navbar-collapse {
@@ -290,7 +289,6 @@
     .navbar-expand-md .navbar-nav {
         flex-direction: row;
         display: flex;
-        gap: 5px;
     }
 }
 
