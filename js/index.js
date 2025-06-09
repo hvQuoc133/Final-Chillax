@@ -97,9 +97,9 @@ function changeLang(lang) {
   const input = document.getElementById("myInput");
   if (input) {
     if (lang === 'vi') {
-      input.placeholder = "Ví dụ: Yêu cầu chỗ ngồi ngoài trời, món ăn dị ứng, kiên cử...";
+      input.placeholder = "Ví dụ: Yêu cầu chỗ ngồi ngoài trời, món ăn kiêng...";
     } else if (lang === 'en') {
-      input.placeholder = "E.g. Outdoor seating, food allergies, abstain...";
+      input.placeholder = "Example: Ask for outdoor seats, special diet needs...";
     }
   }
 }
